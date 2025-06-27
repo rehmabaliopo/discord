@@ -70,7 +70,7 @@ function App() {
         }]
       };
 
-      const response = await fetch(DISCORD_WEBHOOK_URL, {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
