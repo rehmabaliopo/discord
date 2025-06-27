@@ -11,7 +11,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   // ⚠️ REPLACE THIS WITH YOUR DISCORD WEBHOOK URL ⚠️
-  const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+  const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1388181246340763678/4S7HGl-zN4bg-PcBFwsUHgtWuXJ4EvGFgDi4tq4w3W5zQtqBzf-8JJXMDiWjWWEZs7nt";
   
   const handleInputChange = (e) => {
     setFormData({
