@@ -1,38 +1,212 @@
-.App {
-    text-align: center;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Discord color variables */
+:root {
+  --discord-primary: #404eed;
+  --discord-secondary: #7289da;
+  --discord-tertiary: #5865f2;
+  --discord-dark: #36393f;
+  --discord-darker: #2f3136;
+  --discord-input: #40444b;
+  --discord-border: #202225;
+  --discord-text-primary: #ffffff;
+  --discord-text-secondary: #72767d;
+  --discord-blurple: #5865f2;
+  --discord-blurple-hover: #4752c4;
+  --discord-link: #00aff4;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Custom Tailwind utilities */
+@layer utilities {
+  .bg-discord-primary {
+    background: linear-gradient(135deg, #404eed 0%, #7289da 100%);
+  }
+  
+  .bg-discord-secondary {
+    background: linear-gradient(45deg, #7289da 0%, #5865f2 100%);
+  }
+  
+  .bg-discord-tertiary {
+    background: linear-gradient(225deg, #5865f2 0%, #404eed 100%);
+  }
+  
+  .bg-discord-dark {
+    background-color: var(--discord-dark);
+  }
+  
+  .bg-discord-input {
+    background-color: var(--discord-input);
+  }
+  
+  .border-discord-border {
+    border-color: var(--discord-border);
+  }
+  
+  .text-discord-text-secondary {
+    color: var(--discord-text-secondary);
+  }
+  
+  .bg-discord-blurple {
+    background-color: var(--discord-blurple);
+  }
+  
+  .bg-discord-blurple-hover {
+    background-color: var(--discord-blurple-hover);
+  }
+  
+  .border-discord-blurple {
+    border-color: var(--discord-blurple);
+  }
+  
+  .text-discord-link {
+    color: var(--discord-link);
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Animated background orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(114, 137, 218, 0.3), rgba(88, 101, 242, 0.3));
+  backdrop-filter: blur(4px);
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.orb-1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  left: 15%;
+  animation-delay: 0s;
 }
 
-.App-link {
-    color: #61dafb;
+.orb-2 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  left: 80%;
+  animation-delay: -2s;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  top: 40%;
+  left: 40%;
+  animation-delay: -4s;
+  opacity: 0.4;
+}
+
+.orb-4 {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 70%;
+  animation-delay: -1s;
+}
+
+.orb-5 {
+  width: 250px;
+  height: 250px;
+  top: 70%;
+  left: 10%;
+  animation-delay: -3s;
+  opacity: 0.3;
+}
+
+.orb-6 {
+  width: 120px;
+  height: 120px;
+  top: 80%;
+  left: 60%;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+/* Additional floating animations for some orbs */
+.orb-1, .orb-4 {
+  animation: float-alt 8s ease-in-out infinite;
+}
+
+.orb-3, .orb-6 {
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+@keyframes float-alt {
+  0%, 100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translateX(10px) translateY(-15px) rotate(2deg);
+    opacity: 0.5;
+  }
+  66% {
+    transform: translateX(-5px) translateY(-10px) rotate(-1deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.1);
+    opacity: 0.4;
+  }
+}
+
+/* Form focus effects */
+input:focus {
+  box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.2);
+}
+
+/* Button hover effects */
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--discord-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--discord-text-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--discord-blurple);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .orb {
+    opacity: 0.2;
+  }
+  
+  .orb-3, .orb-5 {
+    display: none;
+  }
 }
