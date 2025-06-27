@@ -8,11 +8,9 @@ function App() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [webhookUrl, setWebhookUrl] = useState('');
+  const [showWebhookInput, setShowWebhookInput] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // ⚠️ REPLACE THIS WITH YOUR DISCORD WEBHOOK URL ⚠️
-  const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
-  
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
